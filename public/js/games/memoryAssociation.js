@@ -1,0 +1,7 @@
+window.GameAssociation={start(){
+ const area=document.getElementById("gameArea"), pairs=[["Tea","Cup"],["Doctor","Hospital"],["Lock","Key"],["Book","Read"]];
+ let left=[...pairs].sort(()=>Math.random()-.5), right=[...pairs].sort(()=>Math.random()-.5), selected=null, correct=0;
+ area.innerHTML=`<p>Select an item on the left, then its matching association on the right.</p><div class="grid"><div id="left">${left.map((p,i)=>`<button class="sequence-item" data-v="${p[0]}" onclick="GameAssociation.selL(this)">${p[0]}</button>`).join("")}</div><div id="right">${right.map((p,i)=>`<button class="sequence-item" data-v="${p[0]}" onclick="GameAssociation.selR(this)">${p[1]}</button>`).join("")}</div></div>`;
+ this.selected=null;this.correct=0;
+},selL(el){document.querySelectorAll("#left .sequence-item").forEach(x=>x.classList.remove("selected"));el.classList.add("selected");this.selected=el.dataset.v},
+selR(el){if(!this.selected){toast("First choose an item on the left");return}const pair=this.selected;const map={Tea:"Cup",Doctor:"Hospital",Lock:"Key",Book:"Read"};if(map[pair]===el.textContent.trim()){el.classList.add("selected");this.correct++;}else toast("Try another association");this.selected=null;if(this.correct===4)result("association",4,4,100)}};
